@@ -10,9 +10,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Kasir Dante',
       home: Scaffold(
-        body: Container(),
+        body: Center(
+          child: Text('Selamat Datang'),
+        )
       ),
     );
   }
