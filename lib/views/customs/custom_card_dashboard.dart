@@ -62,11 +62,7 @@ class CustomCardDashboard extends StatelessWidget {
               ),
             ],
           ),
-          Container(
-            width: size.width,
-            height: size.width * .005,
-            color: CustomColorsTheme.coklat,
-          ),
+         Divider(color: CustomColorsTheme.coklat,thickness: size.width * .005,)
         ],
       ),
     );

@@ -13,31 +13,23 @@ class DashboardBodyPage extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: size.width * .035),
       width: size.width,
       height: double.infinity,
-      child: Column(
+      child: Stack(
         children: [
           CustomSearchDashboard(
             hintText: 'Cari Barang',
             keyboardType: TextInputType.text,
           ),
           Padding(
-            padding: EdgeInsets.only(top: size.width * .05),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  CustomCardDashboard(),
-                  CustomCardDashboard(),
-                  CustomCardDashboard(),
-                  CustomCardDashboard(),
-                  CustomCardDashboard(),
-                  CustomCardDashboard(),
-                  CustomCardDashboard(),
-                  CustomCardDashboard(),
-                  CustomCardDashboard(),
-                  CustomCardDashboard(),
-                  CustomCardDashboard(),
-                  CustomCardDashboard(),
-                ],
-              ),
+            padding: EdgeInsets.only(
+              top: size.width * .15,
+              bottom: size.width * .2,
+            ),
+            child: ListView.builder(
+              itemCount: 13,
+              physics: ClampingScrollPhysics(),
+              itemBuilder: (context, index) {
+                return CustomCardDashboard();
+              },
             ),
           ),
         ],

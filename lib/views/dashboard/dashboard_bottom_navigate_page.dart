@@ -15,7 +15,7 @@ class DashboardBottomNavigatePage extends StatelessWidget {
           bottom: size.width * .010,
           child: Container(
             width: size.width,
-            height: size.width / 5,
+            height: size.width / 6.9,
             color: CustomColorsTheme.coklat,
           ),
         ),
@@ -26,7 +26,7 @@ class DashboardBottomNavigatePage extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: size.width * .075),
             width: size.width,
-            height: size.width / 5,
+            height: size.width / 7,
             color: CustomColorsTheme.hijauNavi,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,6 +37,7 @@ class DashboardBottomNavigatePage extends StatelessWidget {
                     fontFamily: 'Poppins',
                     fontSize: size.width * .04,
                     fontWeight: FontWeight.bold,
+                    color: CustomColorsTheme.coklat,
                   ),
                 ),
                 Text(
@@ -45,6 +46,7 @@ class DashboardBottomNavigatePage extends StatelessWidget {
                     fontFamily: 'Poppins',
                     fontSize: size.width * .04,
                     fontWeight: FontWeight.bold,
+                    color: CustomColorsTheme.coklat,
                   ),
                 ),
               ],
@@ -54,7 +56,7 @@ class DashboardBottomNavigatePage extends StatelessWidget {
          Positioned(
           left: 0,
           right: 0,
-          bottom: size.width * .09,
+          bottom: size.width * .04,
           child: CircleAvatar(
             radius: size.width * .105,
             backgroundColor: CustomColorsTheme.coklat,
@@ -63,7 +65,7 @@ class DashboardBottomNavigatePage extends StatelessWidget {
         Positioned(
           left: 0,
           right: 0,
-          bottom: size.width * .1,
+          bottom: size.width * .05,
           child: CircleAvatar(
             radius: size.width * .095,
             backgroundColor: CustomColorsTheme.hijauNavi,

@@ -25,24 +25,21 @@ class DashboardTopNavigatePage extends StatelessWidget {
                 preventDuplicates: false,
               );
             },
-            child: Hero(
-              tag: 'welcome-teks',
-              child: Text(
-                'Aplikasi\nKasir',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: size.width * 0.05,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.bold,
-                  height: size.width * .00225,
-                  color: CustomColorsTheme.coklat,
-                ),
+            child: Text(
+              'Aplikasi\nKasir',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: size.width * 0.05,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.bold,
+                height: size.width * .00225,
+                color: CustomColorsTheme.coklat,
               ),
             ),
           ),
           IconButton(
             onPressed: () {
-              Get.dialog(Dialog(child: Text('Say Hai')));
+              Get.toNamed(CustomRoutesPage.settingBody,preventDuplicates: false);
             },
             icon: Icon(
               Icons.settings,
