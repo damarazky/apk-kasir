@@ -1,4 +1,6 @@
+import 'package:apk_kasir_by_dante/views/welcome/welcome_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,14 +11,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Kasir Dante',
-      home: Scaffold(
-        body: Center(
-          child: Text('Selamat Datang'),
-        )
-      ),
+      home: WelcomePage(),
     );
   }
 }
