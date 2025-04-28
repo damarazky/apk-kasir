@@ -1,4 +1,4 @@
-import 'package:apk_kasir_by_dante/views/welcome/welcome_page.dart';
+import 'package:apk_kasir_by_dante/views/customs/custom_routes_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Kasir Dante',
-      home: WelcomePage(),
+      getPages: CustomRoutesPage.pages,
+      initialRoute: CustomRoutesPage.welcome,
     );
   }
 }
