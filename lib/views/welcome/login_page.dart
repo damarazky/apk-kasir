@@ -1,7 +1,9 @@
 import 'package:apk_kasir_by_dante/views/customs/custom_colors_theme.dart';
+import 'package:apk_kasir_by_dante/views/customs/custom_routes_page.dart';
 import 'package:apk_kasir_by_dante/views/customs/custom_submit_welcome_theme.dart';
 import 'package:apk_kasir_by_dante/views/customs/custom_textfield_welcome_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -59,7 +61,15 @@ class LoginPage extends StatelessWidget {
               keyboardType: TextInputType.number,
             ),
           ),
-          CustomSubmitWelcomeTheme(teks: 'Masuk', fungsi: () {}),
+          CustomSubmitWelcomeTheme(
+            teks: 'Masuk',
+            fungsi: () {
+              Get.toNamed(
+                CustomRoutesPage.dashboardImportant,
+                preventDuplicates: false,
+              );
+            },
+          ),
         ],
       ),
     );

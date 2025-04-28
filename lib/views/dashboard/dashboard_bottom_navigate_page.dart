@@ -1,0 +1,76 @@
+import 'package:apk_kasir_by_dante/views/customs/custom_colors_theme.dart';
+import 'package:flutter/material.dart';
+
+class DashboardBottomNavigatePage extends StatelessWidget {
+  const DashboardBottomNavigatePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Stack(
+      children: [
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: size.width * .010,
+          child: Container(
+            width: size.width,
+            height: size.width / 5,
+            color: CustomColorsTheme.coklat,
+          ),
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: size.width * .075),
+            width: size.width,
+            height: size.width / 5,
+            color: CustomColorsTheme.hijauNavi,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Tranksaksi',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: size.width * .04,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'Laporan',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: size.width * .04,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+         Positioned(
+          left: 0,
+          right: 0,
+          bottom: size.width * .09,
+          child: CircleAvatar(
+            radius: size.width * .105,
+            backgroundColor: CustomColorsTheme.coklat,
+          )
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: size.width * .1,
+          child: CircleAvatar(
+            radius: size.width * .095,
+            backgroundColor: CustomColorsTheme.hijauNavi,
+            child: Icon(Icons.add_shopping_cart,color: CustomColorsTheme.coklat,size: size.width * .075,),
+          )
+        ),
+      ],
+    );
+  }
+}
