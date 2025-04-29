@@ -1,7 +1,7 @@
 import 'package:apk_kasir_by_dante/views/customs/custom_colors_theme.dart';
-import 'package:apk_kasir_by_dante/views/dashboard/dashboard_body_page.dart';
-import 'package:apk_kasir_by_dante/views/dashboard/dashboard_bottom_navigate_page.dart';
-import 'package:apk_kasir_by_dante/views/dashboard/dashboard_top_navigate_page.dart';
+import 'package:apk_kasir_by_dante/views/dashboards/dashboard_body_page.dart';
+import 'package:apk_kasir_by_dante/views/dashboards/dashboard_bottom_navigate_page.dart';
+import 'package:apk_kasir_by_dante/views/dashboards/dashboard_top_navigate_page.dart';
 import 'package:flutter/material.dart';
 
 class DashboardImportantPage extends StatelessWidget {

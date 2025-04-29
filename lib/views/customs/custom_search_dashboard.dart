@@ -15,6 +15,7 @@ class CustomSearchDashboard extends StatelessWidget {
         fontSize: size.width * .04,
         fontWeight: FontWeight.bold,
         fontFamily: 'Poppins',
+        color: CustomColorsTheme.coklat,
       ),
       keyboardType: keyboardType,
       decoration: InputDecoration(
@@ -27,6 +28,7 @@ class CustomSearchDashboard extends StatelessWidget {
           fontSize: size.width * .04,
           fontWeight: FontWeight.bold,
           fontFamily: 'Poppins',
+          color: CustomColorsTheme.coklat,
         ),
         fillColor: CustomColorsTheme.hijauNavi,
         filled: true,

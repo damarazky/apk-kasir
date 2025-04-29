@@ -1,5 +1,7 @@
 import 'package:apk_kasir_by_dante/views/customs/custom_colors_theme.dart';
+import 'package:apk_kasir_by_dante/views/customs/custom_routes_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DashboardBottomNavigatePage extends StatelessWidget {
   const DashboardBottomNavigatePage({super.key});
@@ -31,13 +33,18 @@ class DashboardBottomNavigatePage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Tranksaksi',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: size.width * .04,
-                    fontWeight: FontWeight.bold,
-                    color: CustomColorsTheme.coklat,
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(CustomRoutesPage.tranksaksiImportant,preventDuplicates: false);
+                  },
+                  child: Text(
+                    'Tranksaksi',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: size.width * .04,
+                      fontWeight: FontWeight.bold,
+                      color: CustomColorsTheme.coklat,
+                    ),
                   ),
                 ),
                 Text(

@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 class CustomTextfieldWelcomeTheme extends StatelessWidget {
   final String hintText;
   final TextInputType keyboardType;
-  const CustomTextfieldWelcomeTheme({super.key, required this.hintText, required this.keyboardType});
+  const CustomTextfieldWelcomeTheme({
+    super.key,
+    required this.hintText,
+    required this.keyboardType,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +19,7 @@ class CustomTextfieldWelcomeTheme extends StatelessWidget {
         fontSize: size.width * .045,
         fontWeight: FontWeight.bold,
         fontFamily: 'Poppins',
+        color: CustomColorsTheme.coklat,
       ),
       keyboardType: keyboardType,
       decoration: InputDecoration(
@@ -26,6 +31,7 @@ class CustomTextfieldWelcomeTheme extends StatelessWidget {
           fontSize: size.width * .045,
           fontWeight: FontWeight.bold,
           fontFamily: 'Poppins',
+          color: CustomColorsTheme.coklat,
         ),
         fillColor: CustomColorsTheme.hijauNavi,
         filled: true,
