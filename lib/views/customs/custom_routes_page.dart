@@ -1,5 +1,6 @@
 import 'package:apk_kasir_by_dante/views/dashboards/dashboard_important_page.dart';
 import 'package:apk_kasir_by_dante/views/settings/settings_body_page.dart';
+import 'package:apk_kasir_by_dante/views/tranksaksis/tranksaksi_detail_page.dart';
 import 'package:apk_kasir_by_dante/views/tranksaksis/tranksaksi_important_page.dart';
 import 'package:apk_kasir_by_dante/views/welcome/login_page.dart';
 import 'package:apk_kasir_by_dante/views/welcome/welcome_page.dart';
@@ -9,7 +10,7 @@ class CustomRoutesPage {
   // Welcome Section
   static const welcome = '/welcome';
   static const login = '/login';
-  
+
   // Dashboard Section
   static const dashboardImportant = '/dashboard_important';
 
@@ -18,12 +19,10 @@ class CustomRoutesPage {
 
   // Tranksaksi Section
   static const tranksaksiImportant = '/tranksaksi_important';
-
+  static const tranksaksiDetail = '/tranksaksi_detail';
 
   static final pages = [
-
     // Welcome Page
-    
     GetPage(name: welcome, page: () => WelcomePage()),
     GetPage(
       name: login,
@@ -33,7 +32,6 @@ class CustomRoutesPage {
     ),
 
     // Dashboard Page
-    
     GetPage(
       name: dashboardImportant,
       page: () => DashboardImportantPage(),
@@ -42,8 +40,7 @@ class CustomRoutesPage {
     ),
 
     // Setting Page
-    
-     GetPage(
+    GetPage(
       name: settingBody,
       page: () => SettingsBodyPage(),
       transition: Transition.fadeIn,
@@ -51,10 +48,15 @@ class CustomRoutesPage {
     ),
 
     // Tranksaksi Page
-    
-     GetPage(
+    GetPage(
       name: tranksaksiImportant,
       page: () => TranksaksiImportantPage(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 200),
+    ),
+    GetPage(
+      name: tranksaksiDetail,
+      page: () => TranksaksiDetailPage(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 200),
     ),
