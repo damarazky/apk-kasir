@@ -2,7 +2,18 @@ import 'package:apk_kasir_by_dante/views/customs/custom_colors_theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomCardProduk extends StatelessWidget {
-  const CustomCardProduk({super.key});
+  final String namaProduk;
+  final double hargaProduk;
+  final int stockProduk;
+  final Function() delete;
+
+  const CustomCardProduk({
+    super.key,
+    required this.namaProduk,
+    required this.hargaProduk,
+    required this.stockProduk,
+    required this.delete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +29,7 @@ class CustomCardProduk extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Nasi Goreng',
+                    namaProduk,
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       color: CustomColorsTheme.coklat,
@@ -26,7 +37,7 @@ class CustomCardProduk extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Rp 20.000',
+                    "Rp ${hargaProduk.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}",
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       color: CustomColorsTheme.coklat,
@@ -39,7 +50,7 @@ class CustomCardProduk extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    '10 Stock',
+                    ' $stockProduk Stock',
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       color: CustomColorsTheme.coklat,
@@ -50,7 +61,10 @@ class CustomCardProduk extends StatelessWidget {
                   SizedBox(width: size.width * .03),
                   Icon(Icons.edit, color: CustomColorsTheme.coklat),
                   SizedBox(width: size.width * .03),
-                  Icon(Icons.delete, color: CustomColorsTheme.coklat),
+                  GestureDetector(
+                    onTap: delete,
+                    child: Icon(Icons.delete, color: CustomColorsTheme.coklat),
+                  ),
                 ],
               ),
             ],
