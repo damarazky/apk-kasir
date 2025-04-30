@@ -36,4 +36,22 @@ class ProdukModel {
       'updated_at': updatedAt,
     };
   }
+
+  ProdukModel copyWith({
+    String? id,
+    String? nama,
+    double? harga,
+    int? stok,
+    String? createdAt,
+    String? updatedAt,
+  }) {
+    return ProdukModel(
+      id: id ?? this.id,
+      nama: nama ?? this.nama,
+      harga: harga ?? this.harga,
+      stok: stok ?? this.stok,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
 }

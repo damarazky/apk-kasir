@@ -6,6 +6,7 @@ class CustomCardProduk extends StatelessWidget {
   final double hargaProduk;
   final int stockProduk;
   final Function() delete;
+  final Function() edit;
 
   const CustomCardProduk({
     super.key,
@@ -13,6 +14,7 @@ class CustomCardProduk extends StatelessWidget {
     required this.hargaProduk,
     required this.stockProduk,
     required this.delete,
+    required this.edit,
   });
 
   @override
@@ -59,7 +61,10 @@ class CustomCardProduk extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: size.width * .03),
-                  Icon(Icons.edit, color: CustomColorsTheme.coklat),
+                  GestureDetector(
+                    onTap: edit,
+                    child: Icon(Icons.edit, color: CustomColorsTheme.coklat),
+                  ),
                   SizedBox(width: size.width * .03),
                   GestureDetector(
                     onTap: delete,

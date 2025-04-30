@@ -52,6 +52,89 @@ class ProdukImportantPage extends StatelessWidget {
                           namaProduk: data.nama,
                           hargaProduk: data.harga,
                           stockProduk: data.stok ?? 0,
+                          // Edit
+                          edit: () {
+                            namaC.text = data.nama;
+                            hargaC.text = data.harga.toString();
+                            stockC.text = data.stok?.toString() ?? '0';
+
+                            Get.dialog(
+                              CustomDialog(
+                                label: 'Edit\nProduk',
+                                widget: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Edit\nProduk',
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                            height: size.width * .0025,
+                                            color: CustomColorsTheme.coklat,
+                                            fontSize: size.width * .055,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          '!',
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                            color: CustomColorsTheme.coklat,
+                                            fontSize: size.width * .1,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: size.width * .05),
+                                    CustomTextfieldDialog(
+                                      controller: namaC,
+                                      hintText: 'Nama Barang',
+                                      keyboardType: TextInputType.text,
+                                        onChanged: (val) => controller.nama.value = val,
+                                    ),
+                                    CustomTextfieldDialog(
+                                      controller: hargaC,
+                                      hintText: 'Harga Barang',
+                                      keyboardType: TextInputType.number,
+                                        onChanged: (val) => controller.harga.value = val,
+                                    ),
+                                    CustomTextfieldDialog(
+                                      controller: stockC,
+                                      hintText: 'Stock Barang',
+                                      keyboardType: TextInputType.number,
+                                        onChanged: (val) => controller.stock.value = val,
+                                    ),
+                                    CustomSubmitDialog(
+                                      label: 'Simpan Perubahan',
+                                      fungsi: () async {
+                                        final updatedProduk = data.copyWith(
+                                          nama: namaC.text,
+                                          harga:
+                                              double.tryParse(hargaC.text) ?? 0,
+                                          stok: int.tryParse(stockC.text),
+                                          updatedAt: DateTime.now().toIso8601String(),
+                                        );
+
+                                        await controller.updateProduk(
+                                          updatedProduk,
+                                        );
+                                        namaC.clear();
+                                        hargaC.clear();
+                                        stockC.clear();
+                                        Get.close();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+
+                          // Delete
                           delete: () {
                             Get.defaultDialog(
                               title: 'Hapus Produk',
