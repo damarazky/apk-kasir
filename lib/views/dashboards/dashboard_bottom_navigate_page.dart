@@ -47,13 +47,18 @@ class DashboardBottomNavigatePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                  'Laporan',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: size.width * .04,
-                    fontWeight: FontWeight.bold,
-                    color: CustomColorsTheme.coklat,
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(CustomRoutesPage.laporanImportant,preventDuplicates: false);
+                  },
+                  child: Text(
+                    'Laporan',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: size.width * .04,
+                      fontWeight: FontWeight.bold,
+                      color: CustomColorsTheme.coklat,
+                    ),
                   ),
                 ),
               ],

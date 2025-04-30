@@ -1,4 +1,5 @@
 import 'package:apk_kasir_by_dante/views/dashboards/dashboard_important_page.dart';
+import 'package:apk_kasir_by_dante/views/laporans/laporan_important_page.dart';
 import 'package:apk_kasir_by_dante/views/settings/settings_body_page.dart';
 import 'package:apk_kasir_by_dante/views/tranksaksis/tranksaksi_detail_page.dart';
 import 'package:apk_kasir_by_dante/views/tranksaksis/tranksaksi_important_page.dart';
@@ -20,6 +21,9 @@ class CustomRoutesPage {
   // Tranksaksi Section
   static const tranksaksiImportant = '/tranksaksi_important';
   static const tranksaksiDetail = '/tranksaksi_detail';
+
+  // Laporan Tranksaksi Section
+  static const laporanImportant = '/laporan_important';
 
   static final pages = [
     // Welcome Page
@@ -57,6 +61,14 @@ class CustomRoutesPage {
     GetPage(
       name: tranksaksiDetail,
       page: () => TranksaksiDetailPage(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 200),
+    ),
+
+    // Laporan Page
+    GetPage(
+      name: laporanImportant,
+      page: () => LaporanImportantPage(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 200),
     ),
