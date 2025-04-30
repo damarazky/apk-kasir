@@ -35,7 +35,10 @@ class DashboardBottomNavigatePage extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(CustomRoutesPage.tranksaksiImportant,preventDuplicates: false);
+                    Get.toNamed(
+                      CustomRoutesPage.tranksaksiImportant,
+                      preventDuplicates: false,
+                    );
                   },
                   child: Text(
                     'Tranksaksi',
@@ -49,7 +52,10 @@ class DashboardBottomNavigatePage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(CustomRoutesPage.laporanImportant,preventDuplicates: false);
+                    Get.toNamed(
+                      CustomRoutesPage.laporanImportant,
+                      preventDuplicates: false,
+                    );
                   },
                   child: Text(
                     'Laporan',
@@ -65,14 +71,14 @@ class DashboardBottomNavigatePage extends StatelessWidget {
             ),
           ),
         ),
-         Positioned(
+        Positioned(
           left: 0,
           right: 0,
           bottom: size.width * .04,
           child: CircleAvatar(
             radius: size.width * .105,
             backgroundColor: CustomColorsTheme.coklat,
-          )
+          ),
         ),
         Positioned(
           left: 0,
@@ -81,8 +87,17 @@ class DashboardBottomNavigatePage extends StatelessWidget {
           child: CircleAvatar(
             radius: size.width * .095,
             backgroundColor: CustomColorsTheme.hijauNavi,
-            child: Icon(Icons.add_shopping_cart,color: CustomColorsTheme.coklat,size: size.width * .075,),
-          )
+            child: GestureDetector(
+              onTap: () {
+                Get.toNamed(CustomRoutesPage.produkImportant,preventDuplicates: false);
+              },
+              child: Icon(
+                Icons.add_shopping_cart,
+                color: CustomColorsTheme.coklat,
+                size: size.width * .075,
+              ),
+            ),
+          ),
         ),
       ],
     );

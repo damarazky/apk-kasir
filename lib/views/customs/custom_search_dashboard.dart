@@ -13,7 +13,7 @@ class CustomSearchDashboard extends StatelessWidget {
       cursorColor: CustomColorsTheme.coklat,
       style: TextStyle(
         fontSize: size.width * .04,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w700,
         fontFamily: 'Poppins',
         color: CustomColorsTheme.coklat,
       ),
@@ -26,7 +26,7 @@ class CustomSearchDashboard extends StatelessWidget {
         focusColor: CustomColorsTheme.coklat,
         hintStyle: TextStyle(
           fontSize: size.width * .04,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w700,
           fontFamily: 'Poppins',
           color: CustomColorsTheme.coklat,
         ),
