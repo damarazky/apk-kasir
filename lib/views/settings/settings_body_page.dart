@@ -1,6 +1,8 @@
+import 'package:apk_kasir_by_dante/databases/db_helper.dart';
 import 'package:apk_kasir_by_dante/views/customs/custom_colors_theme.dart';
 import 'package:apk_kasir_by_dante/views/dashboards/dashboard_top_navigate_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SettingsBodyPage extends StatelessWidget {
   const SettingsBodyPage({super.key});
@@ -35,7 +37,32 @@ class SettingsBodyPage extends StatelessWidget {
                   thickness: size.width * .005,
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.defaultDialog(
+                      title: 'Hapus Data',
+                      backgroundColor: CustomColorsTheme.hijauNavi,
+                      titleStyle: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: CustomColorsTheme.coklat,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      middleTextStyle: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: CustomColorsTheme.coklat,
+                      ),
+                      middleText: 'Yakin ingin menghapus semua data ini?',
+                      textConfirm: 'Ya',
+                      buttonColor: CustomColorsTheme.cream,
+                      confirmTextColor: CustomColorsTheme.coklat,
+                      cancelTextColor: CustomColorsTheme.coklat,
+                      textCancel: 'Tidak',
+                      onConfirm: () async {
+                        await DBHelper().resetDatabase();
+
+                        Get.close();
+                      },
+                    );
+                  },
                   child: Text(
                     'Reset File Data',
                     style: TextStyle(

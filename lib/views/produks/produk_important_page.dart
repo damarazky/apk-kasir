@@ -46,7 +46,6 @@ class ProdukImportantPage extends StatelessWidget {
                       itemCount: controller.produks.length,
                       itemBuilder: (context, index) {
                         final data = controller.produks[index];
-                        print('Stok Produk ke-$index: ${data.stok}');
 
                         return CustomCardProduk(
                           namaProduk: data.nama,

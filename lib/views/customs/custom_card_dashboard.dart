@@ -5,11 +5,13 @@ class CustomCardDashboard extends StatelessWidget {
   final String namaProduk;
   final double hargaProduk;
   final int stockProduk;
+  final bool selecProduk;
   const CustomCardDashboard({
     super.key,
     required this.namaProduk,
     required this.hargaProduk,
     required this.stockProduk,
+    required this.selecProduk,
   });
 
   @override
@@ -17,6 +19,14 @@ class CustomCardDashboard extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.only(top: size.width * .03),
+      padding: EdgeInsets.symmetric(horizontal: selecProduk ? size.width * .010 : 0,vertical: selecProduk ? size.width * .015 : 0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(selecProduk ? size.width * .025 : 0),
+        border: Border.all(
+          width: size.width * .005,
+          color: selecProduk ? CustomColorsTheme.coklat : Colors.transparent,
+        ),
+      ),
       child: Column(
         children: [
           Row(
@@ -70,10 +80,12 @@ class CustomCardDashboard extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
-            color: CustomColorsTheme.coklat,
-            thickness: size.width * .005,
-          ),
+          selecProduk
+              ? SizedBox.shrink()
+              : Divider(
+                color: CustomColorsTheme.coklat,
+                thickness: size.width * .005,
+              ),
         ],
       ),
     );
