@@ -3,6 +3,7 @@
 import 'package:apk_kasir_by_dante/controllers/produk/produk_crud_controller.dart';
 import 'package:apk_kasir_by_dante/controllers/produk/produk_dao_controller.dart';
 import 'package:apk_kasir_by_dante/databases/db_helper.dart';
+import 'package:apk_kasir_by_dante/models/produk_checkout_model.dart';
 import 'package:apk_kasir_by_dante/models/produk_model.dart';
 import 'package:apk_kasir_by_dante/views/customs/custom_colors_theme.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,8 @@ class ProdukController extends GetxController {
   final ProdukCrudController crud = ProdukCrudController();
   var produks = <ProdukModel>[].obs;
   final DBHelper dbHelper = DBHelper();
+
+  var modelProduk = <ProdukCheckoutModel>[].obs;
 
   final nama = ''.obs;
   final harga = ''.obs;
@@ -93,5 +96,48 @@ class ProdukController extends GetxController {
       total += produk.harga;
     }
     return total;
+  }
+
+  Future<void> updateStok() async {
+    final db = await dbHelper.database;
+    for (var produk in produks) {
+      await db.update(
+        'produk',
+        {'stok': produk.stok},
+        where: 'id = ?',
+        whereArgs: [produk.id],
+      );
+    }
+  }
+
+  Future<void> updateStokAfterChekout() async {
+    for (var produk in modelProduk) {
+      final produkIndex = produks.indexWhere((p) => p.id == produk.id);
+
+      if (produkIndex != -1) {
+        final produkInList = produks[produkIndex];
+        if (produkInList.stok != null) {
+          if (produkInList.stok! >= produk.jumlah) {
+            produkInList.stok =
+                produkInList.stok! - produk.jumlah; 
+          } else {
+            Get.snackbar(
+              'Stok Tidak Cukup',
+              'Stok produk ${produkInList.nama} tidak mencukupi',
+            );
+            return;
+          }
+        } else {
+          // Menangani jika stok produk bernilai null
+          Get.snackbar('Error', 'Stok produk tidak ditemukan');
+          return;
+        }
+      }
+    }
+    try {
+      await updateStok();
+    } catch (e) {
+      print("Error saat update stok: $e");
+    }
   }
 }

@@ -2,7 +2,7 @@ class ProdukModel {
   final String id;
   final String nama;
   final double harga;
-  final int? stok;
+  int? stok;
   final String createdAt;
   final String updatedAt;
 

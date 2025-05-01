@@ -47,4 +47,6 @@ class CheckoutController extends GetxController {
 
   double get totalHarga =>
       selectedProduk.fold(0, (sum, item) => sum + item.harga * item.jumlah);
+
+  
 }
