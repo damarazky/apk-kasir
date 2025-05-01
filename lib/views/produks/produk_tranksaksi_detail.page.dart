@@ -94,10 +94,10 @@ class _DetailTransaksiPageState extends State<DetailTransaksiPage> {
                     ),
                     SizedBox(height: size.width * .015),
                     Divider(
-                      height: size.width * .010,
+                      height: size.width * .02,
                       color: CustomColorsTheme.coklat,
                     ),
-                    SizedBox(height: size.width * .015),
+                    SizedBox(height: size.width * .025),
                     const Text(
                       "Daftar Produk :",
                       style: TextStyle(
@@ -106,36 +106,124 @@ class _DetailTransaksiPageState extends State<DetailTransaksiPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+
                     Expanded(
                       child: ListView.separated(
                         itemCount: items.length,
                         padding: EdgeInsets.zero,
-                        separatorBuilder: (_, __) => const Divider(),
+                        separatorBuilder: (_, __) => const Divider(color: CustomColorsTheme.coklat,),
                         itemBuilder: (context, index) {
                           final item = items[index];
-                          return ListTile(
-                            title: Text(item['nama']),
-                            subtitle: Text(
-                              "${item['jumlah']} x ${item['harga']} = Rp ${item['subtotal']}",
+                          return Container(
+                            margin: EdgeInsets.symmetric(
+                              vertical: size.width * .015,
+                            ),
+                            width: size.width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  ' ${item['nama']} ( ${item['jumlah']} )',
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    color: CustomColorsTheme.coklat,
+                                  ),
+                                ),
+                                Text(
+                                  ' Rp ${item['harga']}',
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    color: CustomColorsTheme.coklat,
+                                  ),
+                                ),
+                              ],
                             ),
                           );
                         },
                       ),
                     ),
-                    const Divider(),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        "Total: Rp ${transaksi!['total_harga']}",
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                    Divider(
+                      thickness: size.width * .002,
+                      color: CustomColorsTheme.coklat,
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Total Harga',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: CustomColorsTheme.coklat,
+                            fontSize: size.width * .04,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Text(
+                          'Rp ${transaksi!['total_harga']}',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: CustomColorsTheme.coklat,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: size.width * .035),
                   ],
                 ),
               ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(vertical: size.width * .04),
+            margin: EdgeInsets.only(bottom: size.width * .035),
+            decoration: BoxDecoration(
+              color: CustomColorsTheme.hijauNavi,
+              border: Border.symmetric(
+                horizontal: BorderSide(
+                  width: size.width * .005,
+                  color: CustomColorsTheme.coklat,
+                ),
+              ),
+            ),
+            child: Center(
+              child: Text(
+                'Cetak Transaksi',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  color: CustomColorsTheme.coklat,
+                  fontSize: size.width * .04,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: size.width * .04),
+            decoration: BoxDecoration(
+              color: CustomColorsTheme.hijauNavi,
+              border: Border(
+                top: BorderSide(
+                  width: size.width * .005,
+                  color: CustomColorsTheme.coklat,
+                ),
+              ),
+            ),
+            child: Center(
+              child: Text(
+                'Buat Pesanan',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  color: CustomColorsTheme.coklat,
+                  fontSize: size.width * .04,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
