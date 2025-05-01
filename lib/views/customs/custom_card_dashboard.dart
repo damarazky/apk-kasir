@@ -2,7 +2,15 @@ import 'package:apk_kasir_by_dante/views/customs/custom_colors_theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomCardDashboard extends StatelessWidget {
-  const CustomCardDashboard({super.key});
+  final String namaProduk;
+  final double hargaProduk;
+  final int stockProduk;
+  const CustomCardDashboard({
+    super.key,
+    required this.namaProduk,
+    required this.hargaProduk,
+    required this.stockProduk,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,20 +26,20 @@ class CustomCardDashboard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Nasi Goreng',
+                    namaProduk,
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: size.width * .04,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w700,
                       color: CustomColorsTheme.coklat,
                     ),
                   ),
                   Text(
-                    'Rp 20.000',
+                    'Rp ${hargaProduk.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}',
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: size.width * .03,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       color: CustomColorsTheme.coklat,
                     ),
                   ),
@@ -41,7 +49,7 @@ class CustomCardDashboard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    '10',
+                    '$stockProduk',
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: size.width * .03,
@@ -62,7 +70,10 @@ class CustomCardDashboard extends StatelessWidget {
               ),
             ],
           ),
-         Divider(color: CustomColorsTheme.coklat,thickness: size.width * .005,)
+          Divider(
+            color: CustomColorsTheme.coklat,
+            thickness: size.width * .005,
+          ),
         ],
       ),
     );

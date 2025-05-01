@@ -14,7 +14,6 @@ class ProdukDaoController {
     final db = await DBHelper().database;
     final result = await db.query('produk', orderBy: 'created_at DESC');
 
-    print('Data Produk $result');
     
     return result.map((e) => ProdukModel.fromMap(e)).toList();
   }

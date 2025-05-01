@@ -1,9 +1,13 @@
+import 'package:apk_kasir_by_dante/controllers/produk/produk_controller.dart';
 import 'package:apk_kasir_by_dante/views/customs/custom_card_dashboard.dart';
 import 'package:apk_kasir_by_dante/views/customs/custom_search_dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DashboardBodyPage extends StatelessWidget {
-  const DashboardBodyPage({super.key});
+  DashboardBodyPage({super.key});
+
+  final ProdukController controller = Get.put(ProdukController());
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +28,20 @@ class DashboardBodyPage extends StatelessWidget {
               top: size.width * .15,
               bottom: size.width * .2,
             ),
-            child: ListView.builder(
-              itemCount: 13,
-              physics: ClampingScrollPhysics(),
-              itemBuilder: (context, index) {
-                return CustomCardDashboard();
-              },
-            ),
+            child: Obx(() {
+              return ListView.builder(
+                itemCount: controller.produks.length,
+                physics: ClampingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final produk = controller.produks[index];
+                  return CustomCardDashboard(
+                    namaProduk: produk.nama,
+                    hargaProduk: produk.harga,
+                    stockProduk: produk.stok ?? 0,
+                  );
+                },
+              );
+            }),
           ),
         ],
       ),

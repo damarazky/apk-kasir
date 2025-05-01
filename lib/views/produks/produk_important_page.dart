@@ -55,7 +55,19 @@ class ProdukImportantPage extends StatelessWidget {
                           // Edit
                           edit: () {
                             namaC.text = data.nama;
-                            hargaC.text = data.harga.toString();
+                            double harga = data.harga;
+                            String hargaFormatted =
+                                "Rp ${harga.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}";
+
+                            String hargaTanpaTitik =
+                                hargaFormatted
+                                    .replaceAll('.', '')
+                                    .replaceAll('Rp ', '')
+                                    .trim();
+
+                            // Step 3: Set ke controller
+                            hargaC.text = hargaTanpaTitik;
+
                             stockC.text = data.stok?.toString() ?? '0';
 
                             Get.dialog(
@@ -94,19 +106,22 @@ class ProdukImportantPage extends StatelessWidget {
                                       controller: namaC,
                                       hintText: 'Nama Barang',
                                       keyboardType: TextInputType.text,
-                                        onChanged: (val) => controller.nama.value = val,
+                                      onChanged:
+                                          (val) => controller.nama.value = val,
                                     ),
                                     CustomTextfieldDialog(
                                       controller: hargaC,
                                       hintText: 'Harga Barang',
                                       keyboardType: TextInputType.number,
-                                        onChanged: (val) => controller.harga.value = val,
+                                      onChanged:
+                                          (val) => controller.harga.value = val,
                                     ),
                                     CustomTextfieldDialog(
                                       controller: stockC,
                                       hintText: 'Stock Barang',
                                       keyboardType: TextInputType.number,
-                                        onChanged: (val) => controller.stock.value = val,
+                                      onChanged:
+                                          (val) => controller.stock.value = val,
                                     ),
                                     CustomSubmitDialog(
                                       label: 'Simpan Perubahan',
@@ -116,7 +131,8 @@ class ProdukImportantPage extends StatelessWidget {
                                           harga:
                                               double.tryParse(hargaC.text) ?? 0,
                                           stok: int.tryParse(stockC.text),
-                                          updatedAt: DateTime.now().toIso8601String(),
+                                          updatedAt:
+                                              DateTime.now().toIso8601String(),
                                         );
 
                                         await controller.updateProduk(
@@ -178,6 +194,13 @@ class ProdukImportantPage extends StatelessWidget {
           shape: CircleBorder(),
           backgroundColor: CustomColorsTheme.hijauNavi,
           onPressed: () {
+            namaC.clear();
+            hargaC.clear();
+            stockC.clear();
+            controller.nama.value = '';
+            controller.harga.value = '';
+            controller.stock.value = '';
+
             Get.dialog(
               CustomDialog(
                 label: 'Buat\nProduk',

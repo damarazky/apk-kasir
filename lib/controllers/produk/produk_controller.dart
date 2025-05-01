@@ -34,7 +34,6 @@ class ProdukController extends GetxController {
       stock: int.tryParse(stock.value),
     );
 
-    print('Nama: ${nama.value}, Harga: ${harga.value}, Stok: ${stock.value}');
 
     Get.snackbar(
       'Berhasil',
