@@ -1,4 +1,6 @@
 import 'package:apk_kasir_by_dante/databases/db_helper.dart';
+import 'package:apk_kasir_by_dante/views/customs/custom_colors_theme.dart';
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 
 class DetailTransaksiPage extends StatefulWidget {
@@ -23,32 +25,91 @@ class _DetailTransaksiPageState extends State<DetailTransaksiPage> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: const Text('Detail Transaksi')),
+      backgroundColor: CustomColorsTheme.cream,
       body:
           transaksi == null
               ? const Center(child: CircularProgressIndicator())
-              : Padding(
-                padding: const EdgeInsets.all(16),
+              : Container(
+                margin: EdgeInsets.only(top: size.height * .075),
+                padding: EdgeInsets.symmetric(horizontal: size.width * .05),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Tanggal: ${transaksi!['tanggal']}"),
-                    const SizedBox(height: 4),
+                    Text(
+                      'Aplikasi\nKasir',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: size.width * 0.05,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                        height: size.width * .00225,
+                        color: CustomColorsTheme.coklat,
+                      ),
+                    ),
+                    SizedBox(height: size.width * .1),
+                    Text(
+                      'Pembayaran Berhasil',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: CustomColorsTheme.coklat,
+                        fontWeight: FontWeight.w700,
+                        fontSize: size.width * .035,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: size.width * .02),
+                      child: BarcodeWidget(
+                        height: size.width * .2,
+                        data: ' ${transaksi!['id']}',
+                        barcode: Barcode.code128(),
+                        drawText: false,
+                      ),
+                    ),
+                    Text(
+                      "${transaksi!['tanggal']} NO INVOICE ${transaksi!['id']}",
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: CustomColorsTheme.coklat,
+                        fontWeight: FontWeight.w700,
+                        fontSize: size.width * .025,
+                      ),
+                    ),
+                    SizedBox(height: size.width * .015),
                     Text(
                       "Metode Pembayaran: ${transaksi!['metode_pembayaran']}",
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: CustomColorsTheme.coklat,
+                      ),
                     ),
-                    const SizedBox(height: 4),
-                    Text("Catatan: ${transaksi!['catatan']}"),
-                    const Divider(height: 24),
+
+                    Text(
+                      "Catatan: ${transaksi!['catatan']}",
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: CustomColorsTheme.coklat,
+                      ),
+                    ),
+                    SizedBox(height: size.width * .015),
+                    Divider(
+                      height: size.width * .010,
+                      color: CustomColorsTheme.coklat,
+                    ),
+                    SizedBox(height: size.width * .015),
                     const Text(
-                      "Daftar Produk:",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      "Daftar Produk :",
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: CustomColorsTheme.coklat,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    const SizedBox(height: 8),
                     Expanded(
                       child: ListView.separated(
                         itemCount: items.length,
+                        padding: EdgeInsets.zero,
                         separatorBuilder: (_, __) => const Divider(),
                         itemBuilder: (context, index) {
                           final item = items[index];

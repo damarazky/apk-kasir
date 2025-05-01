@@ -38,7 +38,7 @@ class DashboardBodyPage extends StatelessWidget {
                 itemCount: controller.produks.length,
                 physics: ClampingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  final produk = controller.produks[index];
+                final produk = controller.produks[index];
                   return GestureDetector(
                     onTap: () {
                       if (controller.isSelecProduk.value) {

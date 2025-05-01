@@ -5,6 +5,7 @@ import 'package:apk_kasir_by_dante/databases/db_helper.dart';
 import 'package:apk_kasir_by_dante/models/produk_checkout_model.dart';
 import 'package:apk_kasir_by_dante/views/produks/produk_tranksaksi_detail.page.dart';
 import 'package:get/get.dart';
+import 'package:uuid/uuid.dart';
 
 class TranksaksiController extends GetxController {
   final DBHelper dbHelper = DBHelper();
@@ -21,7 +22,7 @@ class TranksaksiController extends GetxController {
     );
 
     var db = await dbHelper.database;
-    final tranksaksiId = DateTime.now().toString();
+    final tranksaksiId = const Uuid().v1();
 
     try {
       await db.insert('tranksaksi', {
@@ -34,7 +35,7 @@ class TranksaksiController extends GetxController {
 
       for (var item in list) {
         await db.insert('tranksaksi_item', {
-          'id': DateTime.now().toString() + item.id,
+          'id': const Uuid().v1() + item.id,
           'tranksaksi_id': tranksaksiId,
           'produk_id': item.id,
           'jumlah': item.jumlah,
@@ -44,7 +45,11 @@ class TranksaksiController extends GetxController {
 
       await produkController.updateStokAfterChekout();
 
-      Get.to(() => DetailTransaksiPage(transaksiId: tranksaksiId));
+      Get.to(
+        () => DetailTransaksiPage(transaksiId: tranksaksiId),
+        transition: Transition.fadeIn,
+        duration: const Duration(milliseconds: 200),
+      );
     } catch (e) {
       print("Error: $e");
     }

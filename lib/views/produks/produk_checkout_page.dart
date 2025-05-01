@@ -1,5 +1,6 @@
 import 'package:apk_kasir_by_dante/controllers/produk/checkout_controller.dart';
 import 'package:apk_kasir_by_dante/controllers/produk/tranksaksi_controller.dart';
+import 'package:apk_kasir_by_dante/views/customs/custom_colors_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,70 +15,248 @@ class CheckoutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: Text('Checkout Produk')),
+      backgroundColor: CustomColorsTheme.cream,
+      resizeToAvoidBottomInset: false,
       body: Obx(
-        () => Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: controller.selectedProduk.length,
-                itemBuilder: (context, index) {
-                  final produk = controller.selectedProduk[index];
-                  return ListTile(
-                    title: Text(produk.nama),
-                    subtitle: Text(
-                      'Harga: Rp${produk.harga} - Stok: ${produk.stok}',
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.remove),
-                          onPressed: () => controller.kurangJumlah(index),
-                        ),
-                        Text('${produk.jumlah}'),
-                        IconButton(
-                          icon: Icon(Icons.add),
-                          onPressed: () => controller.tambahJumlah(index),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () => controller.hapusProduk(index),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+        () => Container(
+          margin: EdgeInsets.only(top: size.height * .075),
+          padding: EdgeInsets.symmetric(horizontal: size.width * .05),
+
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Aplikasi\nKasir',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: size.width * 0.05,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.bold,
+                  height: size.width * .00225,
+                  color: CustomColorsTheme.coklat,
+                ),
               ),
-            ),
+              SizedBox(height: size.width * .1),
+              Text(
+                'Detail Tranksaksi',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  color: CustomColorsTheme.coklat,
+                  fontWeight: FontWeight.w700,
+                  fontSize: size.width * .035,
+                ),
+              ),
 
-            // FORM CATATAN & METODE PEMBAYARAN
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    // CATATAN
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Catatan',
-                        border: OutlineInputBorder(),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: controller.selectedProduk.length,
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) {
+                    final produk = controller.selectedProduk[index];
+                    return Container(
+                      margin: EdgeInsets.only(top: size.width * .025),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                produk.nama,
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color: CustomColorsTheme.coklat,
+                                  fontSize: size.width * .035,
+                                ),
+                              ),
+                              Text(
+                                'Rp ${produk.harga.toStringAsFixed(2)}',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color: CustomColorsTheme.coklat,
+                                  fontSize: size.width * .03,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: Icon(
+                                  Icons.remove,
+                                  color: CustomColorsTheme.coklat,
+                                ),
+                                onPressed: () => controller.kurangJumlah(index),
+                              ),
+                              Text(
+                                '${produk.jumlah}',
+                                style: TextStyle(
+                                  color: CustomColorsTheme.coklat,
+                                  fontFamily: 'Poppins',
+                                ),
+                              ),
+                              IconButton(
+                                icon: Icon(
+                                  Icons.add,
+                                  color: CustomColorsTheme.coklat,
+                                ),
+                                onPressed: () => controller.tambahJumlah(index),
+                              ),
+                              IconButton(
+                                icon: Icon(
+                                  Icons.delete,
+                                  color: CustomColorsTheme.coklat,
+                                ),
+                                onPressed: () => controller.hapusProduk(index),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      maxLines: 2,
-                      onChanged: (value) {
-                        transaksiController.catatan.value = value;
-                      },
-                    ),
-                    SizedBox(height: 16),
+                    );
+                  },
+                ),
+              ),
 
-                    // DROPDOWN METODE PEMBAYARAN
-                    Obx(
-                      () => DropdownButtonFormField<String>(
+              Divider(
+                thickness: size.width * .005,
+                color: CustomColorsTheme.coklat,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Total Harga',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      color: CustomColorsTheme.coklat,
+                      fontSize: size.width * .04,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Text(
+                    'Rp ${controller.totalHarga.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      color: CustomColorsTheme.coklat,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+
+              // FORM CATATAN & METODE PEMBAYARAN
+              Padding(
+                padding: EdgeInsets.only(top: size.width * .05),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      // CATATAN
+                      TextFormField(
+                        cursorColor: CustomColorsTheme.coklat,
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          color: CustomColorsTheme.coklat,
+                        ),
                         decoration: InputDecoration(
-                          labelText: 'Metode Pembayaran',
-                          border: OutlineInputBorder(),
+                          labelText: 'Catatan',
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: size.width * .035,
+                          ),
+                          labelStyle: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: CustomColorsTheme.coklat,
+                          ),
+                          fillColor: CustomColorsTheme.hijauNavi,
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              size.width * .5,
+                            ),
+                            borderSide: BorderSide(
+                              width: size.width * .005,
+                              color: CustomColorsTheme.coklat,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              size.width * .5,
+                            ),
+                            borderSide: BorderSide(
+                              width: size.width * .005,
+                              color: CustomColorsTheme.coklat,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              size.width * .5,
+                            ),
+                            borderSide: BorderSide(
+                              width: size.width * .005,
+                              color: CustomColorsTheme.coklat,
+                            ),
+                          ),
+                        ),
+                        maxLines: 1,
+                        onChanged: (value) {
+                          transaksiController.catatan.value = value;
+                        },
+                      ),
+                      SizedBox(height: size.width * .05),
+
+                      DropdownButtonFormField<String>(
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          color: CustomColorsTheme.coklat,
+                        ),
+                        borderRadius: BorderRadius.circular(size.width * .035),
+                        dropdownColor: CustomColorsTheme.cream,
+
+                        padding: EdgeInsets.symmetric(
+                          horizontal: size.width * .035,
+                        ),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: size.width * .035,
+                          ),
+                          labelText: 'Diskon',
+                          labelStyle: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: CustomColorsTheme.coklat,
+                          ),
+                          filled: true,
+                          fillColor: CustomColorsTheme.hijauNavi,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              size.width * .5,
+                            ),
+                            borderSide: BorderSide(
+                              width: size.width * .005,
+                              color: CustomColorsTheme.coklat,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              size.width * .5,
+                            ),
+                            borderSide: BorderSide(
+                              width: size.width * .005,
+                              color: CustomColorsTheme.coklat,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              size.width * .5,
+                            ),
+                            borderSide: BorderSide(
+                              width: size.width * .005,
+                              color: CustomColorsTheme.coklat,
+                            ),
+                          ),
                         ),
                         value:
                             transaksiController.metodePembayaran.value.isEmpty
@@ -98,42 +277,136 @@ class CheckoutPage extends StatelessWidget {
                           }
                         },
                       ),
-                    ),
-                  ],
+
+                      SizedBox(height: size.width * .05),
+
+                      // DROPDOWN METODE PEMBAYARAN
+                      DropdownButtonFormField<String>(
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          color: CustomColorsTheme.coklat,
+                        ),
+                        borderRadius: BorderRadius.circular(size.width * .035),
+                        dropdownColor: CustomColorsTheme.cream,
+
+                        padding: EdgeInsets.symmetric(
+                          horizontal: size.width * .035,
+                        ),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: size.width * .035,
+                          ),
+                          labelText: 'Metode Pembayaran',
+                          labelStyle: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: CustomColorsTheme.coklat,
+                          ),
+                          filled: true,
+                          fillColor: CustomColorsTheme.hijauNavi,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              size.width * .5,
+                            ),
+                            borderSide: BorderSide(
+                              width: size.width * .005,
+                              color: CustomColorsTheme.coklat,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              size.width * .5,
+                            ),
+                            borderSide: BorderSide(
+                              width: size.width * .005,
+                              color: CustomColorsTheme.coklat,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              size.width * .5,
+                            ),
+                            borderSide: BorderSide(
+                              width: size.width * .005,
+                              color: CustomColorsTheme.coklat,
+                            ),
+                          ),
+                        ),
+                        value:
+                            transaksiController.metodePembayaran.value.isEmpty
+                                ? null
+                                : transaksiController.metodePembayaran.value,
+                        items:
+                            metodeList
+                                .map(
+                                  (metode) => DropdownMenuItem(
+                                    value: metode,
+                                    child: Text(metode),
+                                  ),
+                                )
+                                .toList(),
+                        onChanged: (value) {
+                          if (value != null) {
+                            transaksiController.metodePembayaran.value = value;
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
-          ],
-        ),
-      ),
-
-      // BOTTOM TOTAL + BUTTON
-      bottomNavigationBar: Obx(
-        () => Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Total: Rp${controller.totalHarga.toStringAsFixed(2)}'),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () async {
-                  if (transaksiController.metodePembayaran.value.isEmpty) {
-                    Get.snackbar('Error', 'Pilih metode pembayaran dulu');
-                    return;
-                  }
-
-                  await transaksiController.checkoutFromList(
-                    controller.selectedProduk,
-                  );
-                  Get.back();
-                  Get.snackbar('Sukses', 'Checkout berhasil!');
-                },
-                child: Text('Proses Checkout'),
               ),
             ],
           ),
         ),
+      ),
+
+      // BOTTOM TOTAL + BUTTON
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(height: size.width * .075),
+          GestureDetector(
+            onTap: () async {
+              if (transaksiController.metodePembayaran.value.isEmpty) {
+                Get.snackbar('Error', 'Pilih metode pembayaran dulu',backgroundColor: CustomColorsTheme.hijauNavi,colorText: Colors.red);
+                return;
+              }
+
+              await transaksiController.checkoutFromList(
+                controller.selectedProduk,
+              );
+              Get.back();
+              Get.snackbar(
+                'Sukses',
+                'Checkout berhasil!',
+                backgroundColor: CustomColorsTheme.hijauNavi,
+                colorText: CustomColorsTheme.coklat,
+              );
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: size.width * .04),
+              decoration: BoxDecoration(
+                color: CustomColorsTheme.hijauNavi,
+                border: Border(
+                  top: BorderSide(
+                    width: size.width * .005,
+                    color: CustomColorsTheme.coklat,
+                  ),
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  'Buat Pesanan',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    color: CustomColorsTheme.coklat,
+                    fontSize: size.width * .04,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
