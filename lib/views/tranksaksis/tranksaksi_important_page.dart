@@ -52,28 +52,36 @@ class TranksaksiImportantPage extends StatelessWidget {
                     itemCount: kategoriList.length,
                     itemBuilder: (context, index) {
                       final kategori = kategoriList[index];
+
                       return Padding(
                         padding: EdgeInsets.only(right: size.width * .015),
-                        child: CustomCardKategoriTranksaksi(
-                          namaKategori: kategori,
-                          isSelect:
-                              kategori ==
-                              tranksaksiController.kategoriPilih.value,
-                          fungsi: () {
+                        child: GestureDetector(
+                          onTap: () {
                             tranksaksiController.filterTranksaksiByKategori(
                               kategori,
                             );
                           },
+                          child: Obx(() {
+                            final isSelected =
+                                tranksaksiController.kategoriPilih.value ==
+                                kategori;
+                            return CustomCardKategoriTranksaksi(
+                              namaKategori: kategori,
+                              isSelect: isSelected,
+                            );
+                          }),
                         ),
                       );
                     },
                   ),
                 ),
+
                 SizedBox(height: size.width * .020),
                 Obx(() {
                   return SizedBox(
-                    height: size.height * .7,
+                    height: size.height * .6,
                     child: ListView.builder(
+                      padding: EdgeInsets.zero,
                       itemCount: tranksaksiController.transaksiList.length,
                       physics: ClampingScrollPhysics(),
                       itemBuilder: (context, index) {

@@ -36,6 +36,7 @@ class DashboardBodyPage extends StatelessWidget {
               ),
               child: ListView.builder(
                 itemCount: controller.produks.length,
+                padding: EdgeInsets.zero,
                 physics: ClampingScrollPhysics(),
                 itemBuilder: (context, index) {
                 final produk = controller.produks[index];
