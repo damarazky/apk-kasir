@@ -2,6 +2,7 @@ import 'package:apk_kasir_by_dante/databases/db_helper.dart';
 import 'package:apk_kasir_by_dante/models/produk_model.dart';
 
 class ProdukDaoController {
+  
   // Melihat
 
   Future<void> insertProduk(ProdukModel produk) async {
