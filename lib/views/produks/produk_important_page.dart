@@ -19,6 +19,7 @@ class ProdukImportantPage extends StatelessWidget {
 
   final namaC = TextEditingController();
   final hargaC = TextEditingController();
+  final labaC = TextEditingController();
   final stockC = TextEditingController();
 
   @override
@@ -44,12 +45,14 @@ class ProdukImportantPage extends StatelessWidget {
                     return ListView.builder(
                       physics: ClampingScrollPhysics(),
                       itemCount: controller.produks.length,
+                      padding: EdgeInsets.zero,
                       itemBuilder: (context, index) {
                         final data = controller.produks[index];
 
                         return CustomCardProduk(
                           namaProduk: data.nama,
                           hargaProduk: data.harga,
+                          labaProduk: data.laba,
                           stockProduk: data.stok ?? 0,
                           // Edit
                           edit: () {
@@ -57,6 +60,8 @@ class ProdukImportantPage extends StatelessWidget {
                             double harga = data.harga;
                             String hargaFormatted =
                                 "Rp ${harga.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}";
+                            String labaFormatted =
+                                "Rp ${data.laba.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}";
 
                             String hargaTanpaTitik =
                                 hargaFormatted
@@ -64,8 +69,15 @@ class ProdukImportantPage extends StatelessWidget {
                                     .replaceAll('Rp ', '')
                                     .trim();
 
+                            String labaTanpaTitik =
+                                labaFormatted
+                                    .replaceAll('.', '')
+                                    .replaceAll('Rp ', '')
+                                    .trim();
+
                             // Step 3: Set ke controller
                             hargaC.text = hargaTanpaTitik;
+                            labaC.text = labaTanpaTitik;
 
                             stockC.text = data.stok?.toString() ?? '0';
 
@@ -116,6 +128,13 @@ class ProdukImportantPage extends StatelessWidget {
                                           (val) => controller.harga.value = val,
                                     ),
                                     CustomTextfieldDialog(
+                                      controller: labaC,
+                                      hintText: 'Laba Dari Barang',
+                                      keyboardType: TextInputType.number,
+                                      onChanged:
+                                          (val) => controller.laba.value = val,
+                                    ),
+                                    CustomTextfieldDialog(
                                       controller: stockC,
                                       hintText: 'Stock Barang',
                                       keyboardType: TextInputType.number,
@@ -129,6 +148,8 @@ class ProdukImportantPage extends StatelessWidget {
                                           nama: namaC.text,
                                           harga:
                                               double.tryParse(hargaC.text) ?? 0,
+                                          laba:
+                                              double.tryParse(labaC.text) ?? 0,
                                           stok: int.tryParse(stockC.text),
                                           updatedAt:
                                               DateTime.now().toIso8601String(),
@@ -139,6 +160,7 @@ class ProdukImportantPage extends StatelessWidget {
                                         );
                                         namaC.clear();
                                         hargaC.clear();
+                                        labaC.clear();
                                         stockC.clear();
                                         Get.close();
                                       },
@@ -195,9 +217,11 @@ class ProdukImportantPage extends StatelessWidget {
           onPressed: () {
             namaC.clear();
             hargaC.clear();
+            labaC.clear();
             stockC.clear();
             controller.nama.value = '';
             controller.harga.value = '';
+            controller.laba.value = '';
             controller.stock.value = '';
 
             Get.dialog(
@@ -244,6 +268,12 @@ class ProdukImportantPage extends StatelessWidget {
                       onChanged: (val) => controller.harga.value = val,
                     ),
                     CustomTextfieldDialog(
+                      controller: labaC,
+                      hintText: 'Laba Dari Barang',
+                      keyboardType: TextInputType.number,
+                      onChanged: (val) => controller.laba.value = val,
+                    ),
+                    CustomTextfieldDialog(
                       controller: stockC,
                       hintText: 'Stock Barang',
                       keyboardType: TextInputType.number,
@@ -257,6 +287,7 @@ class ProdukImportantPage extends StatelessWidget {
                         await controller.addProduk();
                         namaC.clear();
                         hargaC.clear();
+                        labaC.clear();
                         stockC.clear();
 
                         Navigator.pop(context);

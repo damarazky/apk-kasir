@@ -17,6 +17,7 @@ class ProdukController extends GetxController {
 
   final nama = ''.obs;
   final harga = ''.obs;
+  final laba = ''.obs;
   final stock = ''.obs;
 
   var selectedProduk = <String>[].obs;
@@ -26,9 +27,6 @@ class ProdukController extends GetxController {
   void onInit() {
     super.onInit();
     loadProduk();
-    ever(selectedProduk, (_) {
-      print("Selected Produk: $selectedProduk");
-    });
   }
 
   Future<void> loadProduk() async {
@@ -37,11 +35,12 @@ class ProdukController extends GetxController {
   }
 
   Future<void> addProduk() async {
-    if (nama.value.isEmpty || harga.value.isEmpty) return;
+    if (nama.value.isEmpty || harga.value.isEmpty || laba.value.isEmpty) return;
 
     await crud.addProduk(
       nama: nama.value,
       harga: double.tryParse(harga.value) ?? 0.0,
+      laba: double.tryParse(laba.value) ?? 0.0,
       stock: int.tryParse(stock.value),
     );
 
@@ -54,6 +53,7 @@ class ProdukController extends GetxController {
 
     nama.value = '';
     harga.value = '';
+    laba.value = '';
     stock.value = '';
     await loadProduk();
   }

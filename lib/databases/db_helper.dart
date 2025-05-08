@@ -26,6 +26,7 @@ class DBHelper {
               id TEXT PRIMARY KEY,
               nama TEXT,
               harga REAL,
+              laba REAL,
               stok INTEGER,
               created_at TEXT,
               updated_at TEXT

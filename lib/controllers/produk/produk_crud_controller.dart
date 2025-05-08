@@ -12,12 +12,14 @@ class ProdukCrudController {
   Future<void> addProduk({
     required String nama,
     required double harga,
+    required double laba,
     int? stock,
   }) async {
     final produk = ProdukModel(
       id: const Uuid().v4(),
       nama: nama,
       harga: harga,
+      laba: laba,
       stok: stock,
       createdAt: DateTime.now().toIso8601String(),
       updatedAt: DateTime.now().toIso8601String(),

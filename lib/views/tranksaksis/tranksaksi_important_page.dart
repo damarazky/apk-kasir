@@ -76,7 +76,7 @@ class TranksaksiImportantPage extends StatelessWidget {
                   ),
                 ),
 
-                SizedBox(height: size.width * .020),
+                SizedBox(height: size.height * .020),
                 Obx(() {
                   return SizedBox(
                     height: size.height * .6,

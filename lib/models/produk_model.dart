@@ -2,6 +2,7 @@ class ProdukModel {
   final String id;
   final String nama;
   final double harga;
+  final double laba;
   int? stok;
   final String createdAt;
   final String updatedAt;
@@ -10,6 +11,7 @@ class ProdukModel {
     required this.id,
     required this.nama,
     required this.harga,
+    required this.laba,
     this.stok,
     required this.createdAt,
     required this.updatedAt,
@@ -20,6 +22,7 @@ class ProdukModel {
       id: map['id'],
       nama: map['nama'],
       harga: map['harga'],
+      laba: map['laba'],
       stok: map['stok'],
       createdAt: map['created_at'],
       updatedAt: map['updated_at'],
@@ -31,6 +34,7 @@ class ProdukModel {
       'id': id,
       'nama': nama,
       'harga': harga,
+      'laba': laba,
       'stok': stok,
       'created_at': createdAt,
       'updated_at': updatedAt,
@@ -41,6 +45,7 @@ class ProdukModel {
     String? id,
     String? nama,
     double? harga,
+    double? laba,
     int? stok,
     String? createdAt,
     String? updatedAt,
@@ -49,6 +54,7 @@ class ProdukModel {
       id: id ?? this.id,
       nama: nama ?? this.nama,
       harga: harga ?? this.harga,
+      laba: laba ?? this.laba,
       stok: stok ?? this.stok,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,

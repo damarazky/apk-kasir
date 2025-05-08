@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class CustomCardProduk extends StatelessWidget {
   final String namaProduk;
   final double hargaProduk;
+  final double labaProduk;
   final int stockProduk;
   final Function() delete;
   final Function() edit;
@@ -14,7 +15,7 @@ class CustomCardProduk extends StatelessWidget {
     required this.hargaProduk,
     required this.stockProduk,
     required this.delete,
-    required this.edit,
+    required this.edit, required this.labaProduk,
   });
 
   @override
