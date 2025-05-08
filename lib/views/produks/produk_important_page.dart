@@ -81,6 +81,12 @@ class ProdukImportantPage extends StatelessWidget {
 
                             stockC.text = data.stok?.toString() ?? '0';
 
+                            controller.nama.value = data.nama;
+                            controller.harga.value = hargaTanpaTitik;
+                            controller.laba.value = labaTanpaTitik;
+                            controller.stock.value =
+                                data.stok?.toString() ?? '0';
+
                             Get.dialog(
                               CustomDialog(
                                 label: 'Edit\nProduk',
