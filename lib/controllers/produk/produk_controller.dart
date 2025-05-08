@@ -29,6 +29,12 @@ class ProdukController extends GetxController {
     loadProduk();
   }
 
+  bool get isFormUpdateValid =>
+      nama.isNotEmpty &&
+      harga.isNotEmpty &&
+      laba.isNotEmpty &&
+      stock.isNotEmpty;
+
   Future<void> loadProduk() async {
     final result = await crud.loadProduk();
     produks.value = result;
@@ -118,8 +124,7 @@ class ProdukController extends GetxController {
         final produkInList = produks[produkIndex];
         if (produkInList.stok != null) {
           if (produkInList.stok! >= produk.jumlah) {
-            produkInList.stok =
-                produkInList.stok! - produk.jumlah; 
+            produkInList.stok = produkInList.stok! - produk.jumlah;
           } else {
             Get.snackbar(
               'Stok Tidak Cukup',

@@ -143,27 +143,40 @@ class ProdukImportantPage extends StatelessWidget {
                                     ),
                                     CustomSubmitDialog(
                                       label: 'Simpan Perubahan',
-                                      fungsi: () async {
-                                        final updatedProduk = data.copyWith(
-                                          nama: namaC.text,
-                                          harga:
-                                              double.tryParse(hargaC.text) ?? 0,
-                                          laba:
-                                              double.tryParse(labaC.text) ?? 0,
-                                          stok: int.tryParse(stockC.text),
-                                          updatedAt:
-                                              DateTime.now().toIso8601String(),
-                                        );
+                                      fungsi:
+                                          controller.isFormUpdateValid
+                                              ? () async {
+                                                final updatedProduk = data
+                                                    .copyWith(
+                                                      nama: namaC.text,
+                                                      harga:
+                                                          double.tryParse(
+                                                            hargaC.text,
+                                                          ) ??
+                                                          0,
+                                                      laba:
+                                                          double.tryParse(
+                                                            labaC.text,
+                                                          ) ??
+                                                          0,
+                                                      stok: int.tryParse(
+                                                        stockC.text,
+                                                      ),
+                                                      updatedAt:
+                                                          DateTime.now()
+                                                              .toIso8601String(),
+                                                    );
 
-                                        await controller.updateProduk(
-                                          updatedProduk,
-                                        );
-                                        namaC.clear();
-                                        hargaC.clear();
-                                        labaC.clear();
-                                        stockC.clear();
-                                        Get.close();
-                                      },
+                                                await controller.updateProduk(
+                                                  updatedProduk,
+                                                );
+                                                namaC.clear();
+                                                hargaC.clear();
+                                                labaC.clear();
+                                                stockC.clear();
+                                                Get.close();
+                                              }
+                                              : null,
                                     ),
                                   ],
                                 ),
