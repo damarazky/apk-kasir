@@ -25,7 +25,7 @@ class TranksaksiDaoController {
     final db = await dbHelper.database;
     return await db.rawQuery(
       '''
-      SELECT p.nama AS nama_produk, ti.jumlah, ti.subtotal
+      SELECT p.nama AS nama_produk, ti.jumlah, ti.subtotal, ti.harga_produk
       FROM tranksaksi_item ti
       JOIN produk p ON p.id = ti.produk_id
       WHERE ti.tranksaksi_id = ?

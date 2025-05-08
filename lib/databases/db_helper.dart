@@ -54,6 +54,7 @@ class DBHelper {
               produk_id TEXT,
               jumlah INTEGER,
               subtotal REAL,
+              harga_produk REAL, 
               FOREIGN KEY (tranksaksi_id) REFERENCES tranksaksi(id),
               FOREIGN KEY (produk_id) REFERENCES produk(id)
             )

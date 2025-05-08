@@ -1,5 +1,5 @@
 import 'package:apk_kasir_by_dante/views/customs/custom_colors_theme.dart';
-import 'package:apk_kasir_by_dante/views/produks/produk_tranksaksi_detail.page.dart';
+import 'package:apk_kasir_by_dante/views/tranksaksis/produk_tranksaksi_detail.page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

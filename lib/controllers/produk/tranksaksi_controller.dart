@@ -6,7 +6,7 @@ import 'package:apk_kasir_by_dante/databases/db_helper.dart';
 import 'package:apk_kasir_by_dante/models/produk_checkout_model.dart';
 import 'package:apk_kasir_by_dante/models/tranksaksi_item_model.dart';
 import 'package:apk_kasir_by_dante/models/tranksaksi_model.dart';
-import 'package:apk_kasir_by_dante/views/produks/produk_tranksaksi_detail.page.dart';
+import 'package:apk_kasir_by_dante/views/tranksaksis/produk_tranksaksi_detail.page.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
@@ -100,6 +100,7 @@ class TranksaksiController extends GetxController {
           'produk_id': item.id,
           'jumlah': item.jumlah,
           'subtotal': item.harga * item.jumlah,
+          'harga_produk': item.harga,
         });
       }
 

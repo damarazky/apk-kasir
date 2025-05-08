@@ -134,7 +134,7 @@ class _DetailTransaksiPageState extends State<DetailTransaksiPage> {
                                   ),
                                 ),
                                 Text(
-                                  ' Rp ${item['harga']}',
+                                  ' Rp ${item['harga_produk']}',
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
                                     color: CustomColorsTheme.coklat,
