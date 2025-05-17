@@ -21,8 +21,8 @@ class ProdukModel {
     return ProdukModel(
       id: map['id'],
       nama: map['nama'],
-      harga: map['harga'],
-      laba: map['laba'],
+      harga: map['harga'] != null ? (map['harga'] as num).toDouble() : 0.0,
+      laba: map['laba'] != null ? (map['laba'] as num).toDouble() : 0.0,
       stok: map['stok'],
       createdAt: map['created_at'],
       updatedAt: map['updated_at'],
