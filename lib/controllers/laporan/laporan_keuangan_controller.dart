@@ -15,7 +15,8 @@ class LaporanController extends GetxController {
     SELECT 
       p.nama AS namaProduk,
       SUM(ti.jumlah) AS totalJumlah,
-      SUM(ti.jumlah * p.harga) AS totalSubtotal
+      SUM(ti.jumlah * p.harga) AS totalSubtotal,
+      SUM(p.laba * ti.jumlah) AS totalLaba
       FROM tranksaksi_item ti
       JOIN produk p ON p.id = ti.produk_id
       GROUP BY p.nama
@@ -29,6 +30,7 @@ class LaporanController extends GetxController {
             namaProduk: e['namaProduk'] ?? 'Tidak diketahui',
             jumlah: e['totalJumlah'] ?? 0,
             subtotal: (e['totalSubtotal'] ?? 0).toDouble(),
+            laba: (e['totalLaba'] ?? 0).toDouble(),
             tanggal: '',
           );
         }).toList();

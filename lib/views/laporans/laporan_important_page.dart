@@ -4,6 +4,7 @@ import 'package:apk_kasir_by_dante/views/customs/custom_search_dashboard.dart';
 import 'package:apk_kasir_by_dante/views/dashboards/dashboard_bottom_navigate_page.dart';
 import 'package:apk_kasir_by_dante/views/dashboards/dashboard_top_navigate_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class LaporanImportantPage extends StatelessWidget {
   const LaporanImportantPage({super.key});
@@ -11,6 +12,8 @@ class LaporanImportantPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final tanggal = DateTime.now();
+    final tgl = DateFormat('dd MMMM yyyy').format(tanggal);
     return Scaffold(
       backgroundColor: CustomColorsTheme.cream,
       body: Stack(
@@ -34,7 +37,7 @@ class LaporanImportantPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Tanggal Laporan : 25 April 2025',
+                        'Tanggal Laporan : $tgl',
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           color: CustomColorsTheme.coklat,

@@ -66,9 +66,21 @@ class CustomDiagramChartLaporan extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Text(
                   'Pendapatan',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w700,
+                    color: CustomColorsTheme.coklat,
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Text(
+                  'Laba',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'Poppins',
@@ -95,7 +107,10 @@ class CustomDiagramChartLaporan extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   decoration: BoxDecoration(
                     border: Border(
-                      bottom: BorderSide(color: Colors.grey.shade300, width: 0.8),
+                      bottom: BorderSide(
+                        color: Colors.grey.shade300,
+                        width: 0.8,
+                      ),
                     ),
                   ),
                   child: Row(
@@ -108,6 +123,7 @@ class CustomDiagramChartLaporan extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'Poppins',
                             color: CustomColorsTheme.coklat,
+                            fontSize: size.width * .03,
                           ),
                         ),
                       ),
@@ -119,17 +135,31 @@ class CustomDiagramChartLaporan extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'Poppins',
                             color: CustomColorsTheme.coklat,
+                            fontSize: size.width * .03,
                           ),
                         ),
                       ),
                       Expanded(
-                        flex: 2,
+                        flex: 3,
                         child: Text(
                           "Rp ${produk.subtotal.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Poppins',
                             color: CustomColorsTheme.coklat,
+                            fontSize: size.width * .03,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          "Rp ${produk.laba.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: CustomColorsTheme.coklat,
+                            fontSize: size.width * .03,
                           ),
                         ),
                       ),
