@@ -18,7 +18,7 @@ class CustomCardTranksaksi extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Get.to(
-          () => DetailTransaksiPage(transaksiId: tranksaksiId),
+          () => DetailTransaksiPage(transaksiId: [tranksaksiId]),
           transition: Transition.fadeIn,
           duration: const Duration(milliseconds: 200),
         );

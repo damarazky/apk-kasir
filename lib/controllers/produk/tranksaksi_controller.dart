@@ -128,7 +128,7 @@ class TranksaksiController extends GetxController {
       print('proses perubahan stock selesai');
 
       Get.to(
-        () => DetailTransaksiPage(transaksiId: tranksaksiId),
+        () => DetailTransaksiPage(transaksiId: [tranksaksiId]),
         transition: Transition.fadeIn,
         preventDuplicates: false,
         duration: const Duration(milliseconds: 200),
