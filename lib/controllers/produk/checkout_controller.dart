@@ -1,14 +1,17 @@
 import 'package:apk_kasir_by_dante/models/produk_checkout_model.dart';
+import 'package:apk_kasir_by_dante/models/produk_model.dart';
 import 'package:get/get.dart';
 import 'produk_controller.dart';
 
 class CheckoutController extends GetxController {
-  final ProdukController produkController = Get.find<ProdukController>();
+  late ProdukController produkController;
 
   var selectedProduk = <ProdukCheckoutModel>[].obs;
+  var produks = <ProdukModel>[].obs;
 
   @override
   void onInit() {
+    produkController = Get.put(ProdukController());
     super.onInit();
     loadSelectedProduk();
   }
@@ -27,26 +30,37 @@ class CheckoutController extends GetxController {
         }).toList();
   }
 
-  void tambahJumlah(int index) {
-    if (selectedProduk[index].jumlah < selectedProduk[index].stok) {
+  void tambahJumlah(String id) {
+    final index = selectedProduk.indexWhere((p) => p.id == id);
+    if (index != -1 && selectedProduk[index].jumlah < getStokProduk(id)) {
       selectedProduk[index].jumlah++;
       selectedProduk.refresh();
     }
   }
 
-  void kurangJumlah(int index) {
-    if (selectedProduk[index].jumlah > 1) {
+  void kurangJumlah(String id) {
+    final index = selectedProduk.indexWhere((p) => p.id == id);
+    if (index != -1 && selectedProduk[index].jumlah > 1) {
       selectedProduk[index].jumlah--;
       selectedProduk.refresh();
     }
   }
 
-  void hapusProduk(int index) {
-    selectedProduk.removeAt(index);
+  int getStokProduk(String id) {
+    final produk = produks.firstWhereOrNull((p) => p.id == id);
+    return produk?.stok ?? 0;
+  }
+
+  void hapusProduk(int index, {Function? onRemove}) {
+    if (index >= 0 && index < selectedProduk.length) {
+      selectedProduk.removeAt(index);
+      selectedProduk.refresh();
+      if (onRemove != null) {
+        onRemove();
+      }
+    }
   }
 
   double get totalHarga =>
       selectedProduk.fold(0, (sum, item) => sum + item.harga * item.jumlah);
-
-  
 }

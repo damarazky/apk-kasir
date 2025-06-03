@@ -16,7 +16,7 @@ class CustomSubmitWelcomeTheme extends StatelessWidget {
         decoration: BoxDecoration(
           color: CustomColorsTheme.hijauNavi,
           border: Border.all(
-            width: size.width * .010,
+            width: size.width * .005,
             color: CustomColorsTheme.coklat,
           ),
           borderRadius: BorderRadius.circular(size.width * .05),

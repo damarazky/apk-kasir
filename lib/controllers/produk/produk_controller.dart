@@ -1,5 +1,6 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
 
+import 'package:apk_kasir_by_dante/controllers/produk/checkout_controller.dart';
 import 'package:apk_kasir_by_dante/controllers/produk/produk_crud_controller.dart';
 import 'package:apk_kasir_by_dante/controllers/produk/produk_dao_controller.dart';
 import 'package:apk_kasir_by_dante/databases/db_helper.dart';
@@ -10,6 +11,8 @@ import 'package:get/get.dart';
 
 class ProdukController extends GetxController {
   final ProdukCrudController crud = ProdukCrudController();
+  final CheckoutController checkoutController = CheckoutController();
+
   var produks = <ProdukModel>[].obs;
   final DBHelper dbHelper = DBHelper();
 
@@ -38,6 +41,8 @@ class ProdukController extends GetxController {
   Future<void> loadProduk() async {
     final result = await crud.loadProduk();
     produks.value = result;
+
+    modelProduk.value = checkoutController.selectedProduk;
   }
 
   Future<void> addProduk() async {
@@ -104,45 +109,55 @@ class ProdukController extends GetxController {
     return total;
   }
 
-  Future<void> updateStok() async {
+  Future<void> updateStokAfterCheckout({
+    required List<ProdukCheckoutModel> produkCheckout,
+  }) async {
     final db = await dbHelper.database;
-    for (var produk in produks) {
-      await db.update(
-        'produk',
-        {'stok': produk.stok},
-        where: 'id = ?',
-        whereArgs: [produk.id],
-      );
+
+    print('Produk yang akan diupdate stoknya:');
+    for (var p in produkCheckout) {
+      print('ID: ${p.id}, Jumlah: ${p.jumlah}');
     }
-  }
 
-  Future<void> updateStokAfterChekout() async {
-    for (var produk in modelProduk) {
-      final produkIndex = produks.indexWhere((p) => p.id == produk.id);
+    for (var produk in produkCheckout) {
+      final String id = produk.id;
+      final int jumlah = produk.jumlah;
 
-      if (produkIndex != -1) {
-        final produkInList = produks[produkIndex];
-        if (produkInList.stok != null) {
-          if (produkInList.stok! >= produk.jumlah) {
-            produkInList.stok = produkInList.stok! - produk.jumlah;
-          } else {
-            Get.snackbar(
-              'Stok Tidak Cukup',
-              'Stok produk ${produkInList.nama} tidak mencukupi',
-            );
-            return;
-          }
-        } else {
-          // Menangani jika stok produk bernilai null
-          Get.snackbar('Error', 'Stok produk tidak ditemukan');
-          return;
-        }
+      // Cari produk di list produksi lokal
+      final produkIndex = produks.indexWhere((p) => p.id == id);
+
+      if (produkIndex == -1) {
+        Get.snackbar('Error', 'Produk dengan ID $id tidak ditemukan');
+        continue; // lanjut ke produk berikutnya, jangan return langsung
+      }
+
+      final produkInList = produks[produkIndex];
+
+      if (produkInList.stok == null || produkInList.stok! < jumlah) {
+        Get.snackbar(
+          'Stok Tidak Cukup',
+          'Stok produk ${produkInList.nama} tidak mencukupi',
+        );
+        continue;
+      }
+
+      final newStok = produkInList.stok! - jumlah;
+
+      final rowsAffected = await db.update(
+        'produk',
+        {'stok': newStok},
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+
+      if (rowsAffected > 0) {
+        print('Stok produk ${produkInList.nama} berhasil diupdate ke $newStok');
+        produks[produkIndex].stok = newStok;
+      } else {
+        Get.snackbar('Error', 'Gagal update stok produk ${produkInList.nama}');
       }
     }
-    try {
-      await updateStok();
-    } catch (e) {
-      print("Error saat update stok: $e");
-    }
+
+    await loadProduk(); // Refresh produk list setelah semua update
   }
 }

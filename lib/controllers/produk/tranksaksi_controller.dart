@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:apk_kasir_by_dante/controllers/produk/checkout_controller.dart';
 import 'package:apk_kasir_by_dante/controllers/produk/produk_controller.dart';
 import 'package:apk_kasir_by_dante/controllers/produk/tranksaksi_dao_controller.dart';
 import 'package:apk_kasir_by_dante/databases/db_helper.dart';
@@ -13,8 +14,16 @@ import 'package:uuid/uuid.dart';
 class TranksaksiController extends GetxController {
   final DBHelper dbHelper = DBHelper();
 
-  final ProdukController produkController = Get.find<ProdukController>();
+  late ProdukController produkController;
+  late CheckoutController checkoutController;
   final TranksaksiDaoController tranksaksi = TranksaksiDaoController();
+
+  @override
+  void onInit() {
+    checkoutController = Get.put(CheckoutController());
+    produkController = Get.find<ProdukController>();
+    super.onInit();
+  }
 
   var metodePembayaran = ''.obs;
   var catatan = ''.obs;
@@ -29,6 +38,10 @@ class TranksaksiController extends GetxController {
     transaksiList.value = result.map((e) => TransaksiModel.fromMap(e)).toList();
     semuaTransaksi = await tranksaksi.loadTranksaksi();
     filterTranksaksiByKategori(kategoriPilih.value);
+  }
+
+  void clearTranksaksi() {
+    transaksiItems.clear();
   }
 
   void filterTranksaksiByKategori(String kategori) {
@@ -85,32 +98,45 @@ class TranksaksiController extends GetxController {
     final tranksaksiId = const Uuid().v1();
 
     try {
-      await db.insert('tranksaksi', {
-        'id': tranksaksiId,
-        'tanggal': DateTime.now().toString(),
-        'total_harga': totalHarga,
-        'metode_pembayaran': metodePembayaran.value,
-        'catatan': catatan.value,
+      await db.transaction((txn) async {
+        await txn.insert('tranksaksi', {
+          'id': tranksaksiId,
+          'tanggal': DateTime.now().toString(),
+          'total_harga': totalHarga,
+          'metode_pembayaran': metodePembayaran.value,
+          'catatan': catatan.value,
+        });
+
+        for (var item in list) {
+          await txn.insert('tranksaksi_item', {
+            'id': const Uuid().v1() + item.id,
+            'tranksaksi_id': tranksaksiId,
+            'produk_id': item.id,
+            'jumlah': item.jumlah,
+            'subtotal': item.harga * item.jumlah,
+            'harga_produk': item.harga,
+          });
+        }
       });
 
-      for (var item in list) {
-        await db.insert('tranksaksi_item', {
-          'id': const Uuid().v1() + item.id,
-          'tranksaksi_id': tranksaksiId,
-          'produk_id': item.id,
-          'jumlah': item.jumlah,
-          'subtotal': item.harga * item.jumlah,
-          'harga_produk': item.harga,
-        });
-      }
+      print('proses perubahan stock mulai');
 
-      await produkController.updateStokAfterChekout();
+      await produkController.loadProduk();
+      await produkController.updateStokAfterCheckout(
+        produkCheckout: checkoutController.selectedProduk,
+      );
+      print('proses perubahan stock selesai');
 
       Get.to(
         () => DetailTransaksiPage(transaksiId: tranksaksiId),
         transition: Transition.fadeIn,
+        preventDuplicates: false,
         duration: const Duration(milliseconds: 200),
       );
+      metodePembayaran.value = '';
+      catatan.value = '';
+
+      produkController.update();
     } catch (e) {
       print("Error: $e");
     }

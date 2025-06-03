@@ -6,6 +6,7 @@ import 'package:apk_kasir_by_dante/views/tranksaksis/tranksaksi_detail_page.dart
 import 'package:apk_kasir_by_dante/views/tranksaksis/tranksaksi_important_page.dart';
 import 'package:apk_kasir_by_dante/views/welcome/login_page.dart';
 import 'package:apk_kasir_by_dante/views/welcome/welcome_page.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 
 class CustomRoutesPage {

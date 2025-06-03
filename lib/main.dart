@@ -2,7 +2,7 @@ import 'package:apk_kasir_by_dante/views/customs/custom_routes_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 

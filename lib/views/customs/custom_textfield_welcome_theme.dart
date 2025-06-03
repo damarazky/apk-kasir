@@ -38,21 +38,21 @@ class CustomTextfieldWelcomeTheme extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(size.width * .05),
           borderSide: BorderSide(
-            width: size.width * .010,
+            width: size.width * .005,
             color: CustomColorsTheme.coklat,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(size.width * .05),
           borderSide: BorderSide(
-            width: size.width * .010,
+            width: size.width * .005,
             color: CustomColorsTheme.coklat,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(size.width * .05),
           borderSide: BorderSide(
-            width: size.width * .010,
+            width: size.width * .005,
             color: CustomColorsTheme.coklat,
           ),
         ),

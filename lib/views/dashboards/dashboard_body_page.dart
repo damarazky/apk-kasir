@@ -1,3 +1,6 @@
+// ignore_for_file: avoid_print
+
+import 'package:apk_kasir_by_dante/controllers/produk/checkout_controller.dart';
 import 'package:apk_kasir_by_dante/controllers/produk/produk_controller.dart';
 import 'package:apk_kasir_by_dante/controllers/produk/tranksaksi_controller.dart';
 import 'package:apk_kasir_by_dante/views/customs/custom_card_dashboard.dart';
@@ -8,7 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardBodyPage extends StatelessWidget {
-  DashboardBodyPage({super.key});
+  DashboardBodyPage({super.key}) {
+    Get.put(CheckoutController());
+  }
 
   final ProdukController controller = Get.put(ProdukController());
   final TranksaksiController tranksaksiController = Get.put(
@@ -39,7 +44,7 @@ class DashboardBodyPage extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 physics: ClampingScrollPhysics(),
                 itemBuilder: (context, index) {
-                final produk = controller.produks[index];
+                  final produk = controller.produks[index];
                   return GestureDetector(
                     onTap: () {
                       if (controller.isSelecProduk.value) {
@@ -68,15 +73,35 @@ class DashboardBodyPage extends StatelessWidget {
                 child: FloatingActionButton(
                   shape: CircleBorder(),
                   backgroundColor: CustomColorsTheme.hijauNavi,
-                  onPressed: () {
+                  onPressed: () async {
                     if (!controller.isSelecProduk.value) {
                       controller.toggleProdukMode();
                       return;
                     }
 
+                    print(
+                      'Data yang di kirim : ${controller.selectedProduk.value}',
+                    );
+
                     if (controller.selectedProduk.isNotEmpty &&
                         controller.isSelecProduk.value) {
-                      Get.to(() => CheckoutPage())!.then((_) {
+                      final List<String> selectP =
+                          controller.produks
+                              .where(
+                                (p) => controller.selectedProduk.contains(p.id),
+                              )
+                              .map((p) => p.id)
+                              .toList();
+
+                      print('select P $selectP');
+
+                      await Get.to(
+                        () => CheckoutPage(),
+                        transition: Transition.fadeIn,
+                        preventDuplicates: false,
+                        duration: const Duration(milliseconds: 500),
+                        arguments: selectP,
+                      )!.then((_) {
                         controller.clearProduk();
                         controller.isSelecProduk.value = false;
                       });

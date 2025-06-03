@@ -1,21 +1,52 @@
 import 'package:apk_kasir_by_dante/controllers/produk/checkout_controller.dart';
+import 'package:apk_kasir_by_dante/controllers/produk/produk_controller.dart';
 import 'package:apk_kasir_by_dante/controllers/produk/tranksaksi_controller.dart';
+import 'package:apk_kasir_by_dante/models/produk_checkout_model.dart';
+import 'package:apk_kasir_by_dante/models/produk_model.dart';
 import 'package:apk_kasir_by_dante/views/customs/custom_colors_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CheckoutPage extends StatelessWidget {
-  final CheckoutController controller = Get.put(CheckoutController());
+class CheckoutPage extends StatefulWidget {
+  CheckoutPage({super.key});
+
+  @override
+  State<CheckoutPage> createState() => _CheckoutPageState();
+}
+
+class _CheckoutPageState extends State<CheckoutPage> {
+  final CheckoutController controller = Get.find<CheckoutController>();
   final TranksaksiController transaksiController =
       Get.find<TranksaksiController>();
-
+  final ProdukController produkC = Get.find<ProdukController>();
   final _formKey = GlobalKey<FormState>();
 
   final List<String> metodeList = ['Cash', 'Transfer', 'QRIS', 'E-Wallet'];
+  late List<String> milihId;
+
+  @override
+  void initState() {
+    super.initState();
+
+    milihId = (Get.arguments as List<String>?) ?? [];
+
+    List<ProdukModel> selectProduk =
+        produkC.produks.where((p) => milihId.contains(p.id)).toList();
+
+    List<ProdukCheckoutModel> checkoutList =
+        selectProduk
+            .map((produk) => ProdukCheckoutModel.fromProduk(produk))
+            .toList();
+
+    controller.selectedProduk.assignAll(checkoutList);
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
+    print('Data yg diterima : $milihId');
+
     return Scaffold(
       backgroundColor: CustomColorsTheme.cream,
       resizeToAvoidBottomInset: false,
@@ -51,10 +82,12 @@ class CheckoutPage extends StatelessWidget {
 
               Expanded(
                 child: ListView.builder(
-                  itemCount: controller.selectedProduk.length,
+                  itemCount: milihId.length,
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
                     final produk = controller.selectedProduk[index];
+                    final id = milihId[index];
+
                     return Container(
                       margin: EdgeInsets.only(top: size.width * .025),
                       child: Row(
@@ -89,28 +122,40 @@ class CheckoutPage extends StatelessWidget {
                                   Icons.remove,
                                   color: CustomColorsTheme.coklat,
                                 ),
-                                onPressed: () => controller.kurangJumlah(index),
+                                onPressed: () => controller.kurangJumlah(id),
                               ),
-                              Text(
-                                '${produk.jumlah}',
-                                style: TextStyle(
-                                  color: CustomColorsTheme.coklat,
-                                  fontFamily: 'Poppins',
-                                ),
-                              ),
+                              Obx(() {
+                                final model = controller.selectedProduk
+                                    .firstWhereOrNull((e) => e.id == id);
+                                return Text(
+                                  '${model?.jumlah ?? 0}',
+                                  style: TextStyle(
+                                    color: CustomColorsTheme.coklat,
+                                    fontFamily: 'Poppins',
+                                  ),
+                                );
+                              }),
                               IconButton(
                                 icon: Icon(
                                   Icons.add,
                                   color: CustomColorsTheme.coklat,
                                 ),
-                                onPressed: () => controller.tambahJumlah(index),
+                                onPressed: () => controller.tambahJumlah(id),
                               ),
                               IconButton(
                                 icon: Icon(
                                   Icons.delete,
                                   color: CustomColorsTheme.coklat,
                                 ),
-                                onPressed: () => controller.hapusProduk(index),
+                                onPressed: () {
+                                  setState(() {
+                                    milihId.removeAt(index);
+                                    controller.hapusProduk(
+                                      index,
+                                      onRemove: () {},
+                                    );
+                                  });
+                                },
                               ),
                             ],
                           ),
@@ -208,78 +253,6 @@ class CheckoutPage extends StatelessWidget {
                       ),
                       SizedBox(height: size.width * .05),
 
-                      DropdownButtonFormField<String>(
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          color: CustomColorsTheme.coklat,
-                        ),
-                        borderRadius: BorderRadius.circular(size.width * .035),
-                        dropdownColor: CustomColorsTheme.cream,
-
-                        padding: EdgeInsets.symmetric(
-                          horizontal: size.width * .035,
-                        ),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: size.width * .035,
-                          ),
-                          labelText: 'Diskon',
-                          labelStyle: TextStyle(
-                            fontFamily: 'Poppins',
-                            color: CustomColorsTheme.coklat,
-                          ),
-                          filled: true,
-                          fillColor: CustomColorsTheme.hijauNavi,
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                              size.width * .5,
-                            ),
-                            borderSide: BorderSide(
-                              width: size.width * .005,
-                              color: CustomColorsTheme.coklat,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                              size.width * .5,
-                            ),
-                            borderSide: BorderSide(
-                              width: size.width * .005,
-                              color: CustomColorsTheme.coklat,
-                            ),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                              size.width * .5,
-                            ),
-                            borderSide: BorderSide(
-                              width: size.width * .005,
-                              color: CustomColorsTheme.coklat,
-                            ),
-                          ),
-                        ),
-                        value:
-                            transaksiController.metodePembayaran.value.isEmpty
-                                ? null
-                                : transaksiController.metodePembayaran.value,
-                        items:
-                            metodeList
-                                .map(
-                                  (metode) => DropdownMenuItem(
-                                    value: metode,
-                                    child: Text(metode),
-                                  ),
-                                )
-                                .toList(),
-                        onChanged: (value) {
-                          if (value != null) {
-                            transaksiController.metodePembayaran.value = value;
-                          }
-                        },
-                      ),
-
-                      SizedBox(height: size.width * .05),
-
                       // DROPDOWN METODE PEMBAYARAN
                       DropdownButtonFormField<String>(
                         style: TextStyle(
@@ -366,15 +339,36 @@ class CheckoutPage extends StatelessWidget {
           SizedBox(height: size.width * .075),
           GestureDetector(
             onTap: () async {
-              if (transaksiController.metodePembayaran.value.isEmpty) {
-                Get.snackbar('Error', 'Pilih metode pembayaran dulu',backgroundColor: CustomColorsTheme.hijauNavi,colorText: Colors.red);
+              if (milihId.isEmpty) {
+                Get.snackbar('Info', 'Tidak ada produk untuk di-checkout');
                 return;
               }
+
+              if (transaksiController.metodePembayaran.value.isEmpty) {
+                Get.snackbar(
+                  'Error',
+                  'Pilih metode pembayaran dulu',
+                  backgroundColor: CustomColorsTheme.hijauNavi,
+                  colorText: Colors.red,
+                );
+                return;
+              }
+
+              print("Produk yang dikirim: ${controller.selectedProduk.length}");
+              print("Total harga: ${controller.totalHarga}");
+              print("Catatan: ${transaksiController.catatan.value}");
+              print(
+                "Metode pembayaran: ${transaksiController.metodePembayaran.value}",
+              );
 
               await transaksiController.checkoutFromList(
                 controller.selectedProduk,
               );
+
+             
+
               Get.back();
+
               Get.snackbar(
                 'Sukses',
                 'Checkout berhasil!',

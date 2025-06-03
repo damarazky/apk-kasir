@@ -1,3 +1,5 @@
+import 'package:apk_kasir_by_dante/models/produk_model.dart';
+
 class ProdukCheckoutModel {
   final String id;
   final String nama;
@@ -22,12 +24,16 @@ class ProdukCheckoutModel {
     );
   }
 
+  factory ProdukCheckoutModel.fromProduk(ProdukModel produk) {
+    return ProdukCheckoutModel(
+      id: produk.id,
+      nama: produk.nama,
+      harga: produk.harga,
+      stok: produk.stok ?? 1,
+    );
+  }
+
   Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'nama': nama,
-      'harga': harga,
-      'stok': stok,
-    };
+    return {'id': id, 'nama': nama, 'harga': harga, 'stok': stok};
   }
 }
